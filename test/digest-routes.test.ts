@@ -86,7 +86,8 @@ describe('digest routes', () => {
 
     it('says how many lines did not parse when there is a bad line', async () => {
       const html = await (await app.request(`/digest/${BAD}`)).text();
-      expect(html).toMatch(/line\(s\) didn.t parse/);
+      // the page escapes the apostrophe (&#39;), as hono/jsx escapes all text
+      expect(html).toMatch(/line\(s\) didn(?:'|&#39;)t parse/);
     });
   });
 
